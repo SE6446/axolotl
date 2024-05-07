@@ -48,6 +48,7 @@ from axolotl.utils.distributed import zero_only
 from axolotl.utils.gradient_checkpointing import hf_grad_checkpoint_unsloth_wrapper
 from axolotl.utils.lora_embeddings import get_linear_embedding_layers
 from axolotl.utils.model_shard_quant import load_sharded_model, load_sharded_model_quant
+from bitmat import convert_hf_model
 
 LOG = logging.getLogger("axolotl")
 
@@ -823,6 +824,11 @@ def load_model(
 
     if cfg.adapter is not None:
         log_gpu_memory_usage(LOG, "after adapters", model.device)
+
+    
+    # convert to bitmat model
+    # ! This will break on model configurations other than: Gemma, Llama, and Mistral (Excluding Mixtral)
+    model = convert_hf_model(model)
 
     # TODO resume_from_checkpoint handling
     return model, lora_config
