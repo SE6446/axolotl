@@ -1,3 +1,5 @@
+# A note from me
+This is a quick hack for me to use astramind's bitmat bitnets in axolotl. Don't mind me.
 # Axolotl
 
 Axolotl is a tool designed to streamline the fine-tuning of various AI models, offering support for multiple configurations and architectures.
