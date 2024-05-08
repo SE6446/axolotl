@@ -45,7 +45,14 @@ class PretrainTokenizationStrategy(PromptTokenizingStrategy):
         return res
 
     def tokenize_prompt(self, prompt):
-        return self._tokenize(prompt[self.text_column])
+        try:
+            return self._tokenize(prompt[self.text_column])
+        except:
+            # Some pretraining dataset curators like to be funny and use 'content' instead of being normal and using 'text'
+            self.text_column = 'content'
+        finally:
+            return self._tokenize(prompt[self.text_column])
+
 
 
 def load(tokenizer, cfg):
