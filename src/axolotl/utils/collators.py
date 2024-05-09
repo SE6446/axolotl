@@ -235,9 +235,9 @@ class PretrainingBatchSamplerDataCollatorForSeq2Seq(DataCollatorForSeq2Seq):
                     ]
                 else:
                     arrays = [(1) * np.array(item) for item in features[feature]]
-                chunked_data[feature] = np.concatenate(arrays)
+                chunked_data[feature] = np.concatenate(arrays) #TODO these seem to be causing issues, something about empty arrays.
             else:
                 arrays = [np.array(item) for item in features[feature]]
-                chunked_data[feature] = np.concatenate(arrays)
+                chunked_data[feature] = np.concatenate(arrays) #! This might also raise errors but I cannot tell
         features = [chunked_data]
         return super().__call__(features, return_tensors=return_tensors)
